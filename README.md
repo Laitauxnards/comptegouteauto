@@ -1,6 +1,5 @@
 # comptegouteauto
 Ce projet à pour but de créer un système d'arrosage automatique.
-
 Le systeme doit répondre aux conditions suivantes:
 
 Déclanchement de l'arrosage la nuit uniquement
