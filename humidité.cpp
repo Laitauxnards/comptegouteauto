@@ -56,7 +56,7 @@ void loop() {
     case check_rain:
       if temps_save + 10800 < millis() { //décompte des 3h
         press_save = digitalRead(br_press)
-      if digitalRead(br_press)<press_save - 5
+      if digitalRead(br_press)<press_save - 5 //Baisse de 5 hpa constatée
         case start_water
 
       }
