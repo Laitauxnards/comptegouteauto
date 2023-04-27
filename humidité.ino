@@ -44,21 +44,27 @@ void loop() {
       digitalWrite(br_start_water, LOW); //couper l'arrosage
       night = digitalRead(br_nuit); //a remplacer par un script photo résistance (avec quantum comme potentiomètre)
       if digitalRead(br_lvl_eau) = HIGH { //vérifier que la terre est moins humide que défini par l'utilisateur 
-        state = low_water
+        state = low_water;
       if night=True {
         if digitalRead(br_soil_moist) < set_moist { //s'assurer que le niveau d'eau est correct
-          state = check_rain 
+          state = check_rain ;
         } 
       } 
       } else {
           state=read_sensors
         }
     case check_rain:
-      if temps_save + 10800 < millis() { //décompte des 3h
+      if temps_save + 10800 < millis() { //dé;compte des 3h
         press_save = digitalRead(br_press)
-      if digitalRead(br_press)<press_save - 5 //Baisse de 5 hpa constatée
-        case start_water //Switch vers la partie de code qui controle l'électrovanne
-
+   }  if digitalRead(br_press)<press_save - 5 { //Baisse de 5 hpa constatée
+        stare = start_water; //Switch vers la partie de code qui controle l'électrovanne
+   }  else {
+        state = read_sensors
       }
+    case start_water:
+      digitalWrite(br_start_water, HIGH);
+      
+
+      
   }
 }
