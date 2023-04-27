@@ -1,10 +1,10 @@
 //============Configuration du senior el system============
-unsigned bool set_moist = XXXX; //Réglage de l'humidité du sol requise par la plante remplacer les X par la valeur
+unsigned float set_moist = XXXX; //Réglage de l'humidité du sol requise par la plante remplacer les X par la valeur
 bool set_night = True; //paramètre de prise en compte de la nuit, true si la nuit est prise en compte
 //=========================================================
 bool night; //il fait nuit ou pas?, true si il fait nuit 
-unsigned int press; //valeur de la pression atmo
-unsigned int press_save; //Sauvegarde de la pression pour la prise d'info initiale (avant les 3h)
+unsigned float press; //valeur de la pression atmo
+unsigned float press_save; //Sauvegarde de la pression pour la prise d'info initiale (avant les 3h)
 bool wat_lvl_crit; //valeur booléenne, true si niveau de l'eau est faible
 bool start_water; //variable qui controle l'arrosage
 unsigned long temps; //timer (max 49d)
