@@ -63,6 +63,7 @@ void loop() {
       }
     case start_water:
       digitalWrite(br_start_water, HIGH);
+      start_water=True;
       
 
       
