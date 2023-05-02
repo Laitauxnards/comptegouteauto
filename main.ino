@@ -56,8 +56,7 @@ void loop() {
           Serial.println("Soil is dry ! Switching state to check_rain");
           state = check_rain;
         } 
-      } 
-      else {
+      } else {
           Serial.println("Nothing detected, Switching state to read_sensors");
           state=read_sensors;
         }
