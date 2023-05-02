@@ -74,10 +74,10 @@ void loop() {
 
     case check_rain:
       if (digitalRead(br_press)==HIGH) { 
-        Serial.println("no pressure drop detected ! switching state to read_sensors");
+        Serial.println("no pressure drop detected ! switching state to begin_water");
         state = read_sensors;
     } else{
-        Serial.println("pressure drop detected ! switching state to begin_water");
+        Serial.println("pressure drop detected ! switching state to read_sensors");
         state = begin_water;
       }
       Serial.println("_________");
