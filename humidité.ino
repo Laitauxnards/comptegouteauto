@@ -54,16 +54,25 @@ void loop() {
           state=read_sensors
         }
     case check_rain:
-      if temps_save + 10800 < millis() { //dé;compte des 3h
+      if temps_save + 10800 < millis() { //décompte des 3h
         press_save = digitalRead(br_press)
    }  if digitalRead(br_press)<press_save - 5 { //Baisse de 5 hpa constatée
-        stare = start_water; //Switch vers la partie de code qui controle l'électrovanne
+        state = start_water; //Switch vers la partie de code qui controle l'électrovanne
    }  else {
         state = read_sensors
       }
     case start_water:
       digitalWrite(br_start_water, HIGH);
       start_water=True;
+      delay(1800);
+      state=read_sensors
+    
+    case low_water:
+      while digitalRead(br_start_water)=HIGH {
+        digitalWrite(br_led_wat_low, HIGH);
+   }  state = read_sensors
+
+    
       
 
       
