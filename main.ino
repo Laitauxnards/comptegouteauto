@@ -10,15 +10,15 @@ unsigned long temps=0; //timer (max 49d)
 unsigned long temps_save=0; //Sauvegarde de l'état précédent du chrono pour faire un timer
 int br_nuit = 13; //broche détect. nuit
 int br_lvl_eau = 12; //broche détect. lvl eau
-int br_soil_moist = 8; //broche détect. soil moist 
+int br_soil_moist = 11; //broche détect. soil moist 
 int br_press = 10; //broche détect. de la press atmo
-int br_start_water = 4; //broche électrovanne
-int br_led_wat_low = 2;
+int br_start_water = 2; //broche électrovanne
+int br_led_wat_low = 4;
 enum {read_sensors, check_rain, begin_water, low_water}state;
 
 void setup(){
   Serial.begin(9600);
-  serial.print("Initiated serial link... ")
+  Serial.print("Initialized serial link... ");
 //=======Init pins=======
   pinMode(br_start_water, OUTPUT);
   pinMode(br_nuit, INPUT);
@@ -28,28 +28,27 @@ void setup(){
   pinMode(br_led_wat_low, OUTPUT);
   digitalWrite(br_start_water, LOW);
   digitalWrite(br_led_wat_low, LOW);
-  serial.print("Initiated pins... ")
+  Serial.print("Initialized pins... ");
 //=======Init var=======
   temps = millis();
   temps_save = 0;
   night = 0;
   wat_lvl_crit = 0;
-  start_water = 0;
   press_save = digitalRead(br_press);
   state=read_sensors;
-  serial.print("Initiated variables... ")
+  Serial.print("Initialized variables... ");
 }
 
 void loop() {
   switch(state){
     case read_sensors:
       digitalWrite(br_start_water, LOW); //couper l'arrosage
-      Serial.println("Turned off water");
       night = digitalRead(br_nuit); //a remplacer par un script photo résistance (avec quantum comme potentiomètre)
       if (digitalRead(br_lvl_eau) == HIGH) { //s'assurer que le niveau d'eau est correct 
         Serial.println("Low water ! Switching state to low_water");
         state = low_water;
-      } break;
+        break;
+      }
       if (digitalRead(br_nuit)==HIGH) {
         Serial.println("Night is true");
 //        if (digitalRead(br_soil_moist) < set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
@@ -75,26 +74,13 @@ void loop() {
 
 
     case check_rain:
-      if (temps_save + 10800 < millis()) { //décompte des 3h
-        press_save = digitalRead(br_press);
-        serial.println("3h timer ended ! Updating saved baro: "); //log
-        serial.print(press_save); //log
-        serial.println("updating saved time: "); //log
-        serial.print(temps_save); //log
-   } if (digitalRead(br_press)<(press_save - 5)) { //Baisse de 5 hpa constatée
-        serial.println("pressure drop detected ! switching state to begin_water");
-        state = begin_water; //Switch vers la partie de code qui controle l'électrovanne
-   }  else {
-        serial.println("no pressure drop detected ! switching state to read_sensors");
+      if (digitalRead(br_press)==HIGH) { //décompte des 3h
+        Serial.println("pressure drop detected ! switching state to begin_water");
+        state = begin_water;
+    } else{
+        Serial.println("no pressure drop detected ! switching state to read_sensors");
         state = read_sensors;
       }
-      Serial.println("Case check_rain successfully executed using following settings: ");
-      Serial.print("temps_save: ");
-      Serial.println(digitalRead(temps_save));
-      Serial.print("press_save: ");        
-      Serial.println(digitalRead(press_save));
-      Serial.print("br_press (live presure): ");
-      Serial.println(digitalRead(br_press));
       Serial.println("_________");
       break;
 
@@ -102,17 +88,23 @@ void loop() {
     case begin_water:
       digitalWrite(br_start_water, HIGH);
       Serial.println("Turned on water");
-      delay(1800000); //timer de 30 min à remplacer par millis pour vérification continue du niveau d'eau
+      delay(10000); //timer de 30 min (10s pour les tests) à remplacer par millis pour vérification continue du niveau d'eau
+      digitalWrite(br_start_water, LOW); //couper l'arrosage
+      Serial.println("Turned off water");
       Serial.println("Case read_sensors successfully executed, switching state to read_sensors ");
+      Serial.println("_________");
       state=read_sensors;
       break;
 
     case low_water:
-      while (digitalRead(br_start_water) == HIGH) {
+      while (digitalRead(br_lvl_eau) == HIGH) {
         digitalWrite(br_led_wat_low, HIGH);
-      serial.println("Water level is good");  
+      }
+      Serial.println("Water level is good");  
       Serial.println("Case low_water successfully executed switching state to read_sensors");
-   }  state = read_sensors;
+      Serial.println("_________");  
+      digitalWrite(br_led_wat_low, LOW);  
+      state = read_sensors;
       break;
   }
 }

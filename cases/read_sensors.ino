@@ -1,11 +1,11 @@
     case read_sensors:
       digitalWrite(br_start_water, LOW); //couper l'arrosage
-      Serial.println("Turned off water");
       night = digitalRead(br_nuit); //a remplacer par un script photo résistance (avec quantum comme potentiomètre)
       if (digitalRead(br_lvl_eau) == HIGH) { //s'assurer que le niveau d'eau est correct 
         Serial.println("Low water ! Switching state to low_water");
         state = low_water;
-      } break;
+        break;
+      }
       if (digitalRead(br_nuit)==HIGH) {
         Serial.println("Night is true");
 //        if (digitalRead(br_soil_moist) < set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
