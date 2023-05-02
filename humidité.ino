@@ -20,7 +20,7 @@ enum {read_sensors, check_rain, begin_water, low_water}state;
 void setup(){
 //=======Init pins=======
   pinMode(br_start_water, OUTPUT);
-  pinMode(br_nuit, INPUT_PULLUP);
+  pinMode(br_nuit, INPUT);
   pinMode(br_lvl_eau, INPUT);
   pinMode(br_soil_moist, INPUT);
   pinMode(br_press, INPUT);
@@ -43,13 +43,15 @@ void loop() {
       night = digitalRead(br_nuit); //a remplacer par un script photo résistance (avec quantum comme potentiomètre)
       if (digitalRead(br_lvl_eau) == HIGH) { //s'assurer que le niveau d'eau est correct 
         state = low_water;
+        break;
+      }
       if (night == 1) {
 //        if (digitalRead(br_soil_moist) < set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
           if (digitalRead(br_soil_moist) == HIGH) {
-        	state = check_rain ;
+        	state = check_rain;
         } 
       } 
-      } else {
+      else {
           state=read_sensors;
         }
     	break;
