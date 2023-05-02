@@ -10,3 +10,7 @@ Le systeme doit répondre aux conditions suivantes:
 
 - S'assurer qu'il ne pleuvera pas dans les 3 prochaines heures à l'aide de données barométrique
 
+# A ajouter
+
+- Mise en place des entrées analogiques pour remplacer les inverseurs utilisés pour le prototype 
+- Vérification continue du niveau d'eau pendant l'arrosage en remplacant le delay par un millis + while
