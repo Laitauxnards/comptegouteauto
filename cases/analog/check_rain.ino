@@ -1,5 +1,5 @@
     case check_rain:
-      if (temps_save + 10800 < millis()) { //décompte des 3h
+      if (temps_save + 10800000 < millis()) { //décompte des 3h
         press_save = digitalRead(br_press);
         Serial.println("3h timer ended ! Updating saved baro: "); //log
         Serial.print(press_save); //log

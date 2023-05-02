@@ -51,7 +51,7 @@ void loop() {
       }
       if (digitalRead(br_nuit)==HIGH) {
         Serial.println("Night is true");
-//        if (digitalRead(br_soil_moist) < set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
+        // if (digitalRead(br_soil_moist) < set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
         if (digitalRead(br_soil_moist) == HIGH) {
           Serial.println("Soil is dry ! Switching state to check_rain");
           state = check_rain;
@@ -73,7 +73,7 @@ void loop() {
 
 
     case check_rain:
-      if (digitalRead(br_press)==HIGH) { //décompte des 3h
+      if (digitalRead(br_press)==HIGH) { 
         Serial.println("pressure drop detected ! switching state to begin_water");
         state = begin_water;
     } else{
