@@ -11,7 +11,7 @@ unsigned long temps=0; //timer (max 49d)
 unsigned long temps_save=0; //Sauvegarde de l'état précédent du chrono pour faire un timer
 int br_nuit = 13; //broche détect. nuit
 int br_lvl_eau = 12; //broche détect. lvl eau
-int br_soil_moist = 9; //broche détect. soil moist 
+int br_soil_moist = 8; //broche détect. soil moist 
 int br_press = 10; //broche détect. de la press atmo
 int br_start_water = 4; //broche électrovanne
 int br_led_wat_low = 2;
@@ -45,23 +45,26 @@ void loop() {
       night = digitalRead(br_nuit); //a remplacer par un script photo résistance (avec quantum comme potentiomètre)
       if (digitalRead(br_lvl_eau) == HIGH) { //s'assurer que le niveau d'eau est correct 
         state = low_water;
+        Serial.println("lo wat"); //debug
         break;
       }
       if (digitalRead(br_nuit)==HIGH) {
 //        if (digitalRead(br_soil_moist) < set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
-      	if (digitalRead(br_soil_moist) == HIGH) {
-        	state = check_rain;
+        if (digitalRead(br_soil_moist) == HIGH) {
+          state = check_rain;
         } 
       } 
       else {
           state=read_sensors;
         }
-      Serial.print("br_nuit: ");         		
-  	  Serial.println(digitalRead(br_nuit));
-      Serial.print("br_lvl_eau: ");         		
-  	  Serial.println(digitalRead(br_lvl_eau));
-      Serial.print("br_soil_moist: ");         		
-  	  Serial.println(digitalRead(br_soil_moist));
+      Serial.print("br_nuit: ");        //debug     
+      Serial.println(digitalRead(br_nuit)); //debug
+      Serial.print("br_lvl_eau: ");    //debug          
+      Serial.println(digitalRead(br_lvl_eau)); //debug
+      Serial.print("br_soil_moist: ");             //debug
+      Serial.println(digitalRead(br_soil_moist)); //debug
+      Serial.println("_________");  //debug
+      delay(1000);
       break;
     case check_rain:
       if (temps_save + 10800 < millis()) { //décompte des 3h
@@ -71,19 +74,19 @@ void loop() {
    }  else {
         state = read_sensors;
       }
-    	break;
+      break;
     case begin_water:
       digitalWrite(br_start_water, HIGH);
       start_water = 1;
-      delay(1800);
+      delay(1800000);
       digitalWrite(br_start_water, LOW);
       start_water = 0;
       state=read_sensors;
-    	break;
+      break;
     case low_water:
       while (digitalRead(br_start_water) == HIGH) {
         digitalWrite(br_led_wat_low, HIGH);
    }  state = read_sensors;
-    	break;
+      break;
   }
 }
