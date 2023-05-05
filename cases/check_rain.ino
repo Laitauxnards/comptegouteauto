@@ -1,5 +1,5 @@
     case check_rain:
-      if (digitalRead(br_press)==HIGH) { 
+      if (digitalRead(br_press)==LOW) { 
         Serial.println("no pressure drop detected ! switching state to begin_water");
         state = begin_water;
     } else{

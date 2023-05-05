@@ -21,10 +21,10 @@ void setup(){
   Serial.print("Initialized serial link... ");
 //=======Init pins=======
   pinMode(br_start_water, OUTPUT);
-  pinMode(br_nuit, INPUT);
-  pinMode(br_lvl_eau, INPUT);
-  pinMode(br_soil_moist, INPUT);
-  pinMode(br_press, INPUT);
+  pinMode(br_nuit, INPUT_PULLUP);
+  pinMode(br_lvl_eau, INPUT_PULLUP);
+  pinMode(br_soil_moist, INPUT_PULLUP);
+  pinMode(br_press, INPUT_PULLUP);
   pinMode(br_led_wat_low, OUTPUT);
   digitalWrite(br_start_water, LOW);
   digitalWrite(br_led_wat_low, LOW);
@@ -44,15 +44,15 @@ void loop() {
     case read_sensors:
       digitalWrite(br_start_water, LOW); //couper l'arrosage
       night = digitalRead(br_nuit); //a remplacer par un script photo résistance (avec quantum comme potentiomètre)
-      if (digitalRead(br_lvl_eau) == HIGH) { //s'assurer que le niveau d'eau est correct 
+      if (digitalRead(br_lvl_eau) == LOW) { //s'assurer que le niveau d'eau est correct 
         Serial.println("Low water ! Switching state to low_water");
         state = low_water;
         break;
       }
-      if (digitalRead(br_nuit)==HIGH) {
+      if (digitalRead(br_nuit)==LOW) {
         Serial.println("Night is true");
         // if (digitalRead(br_soil_moist) < set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
-        if (digitalRead(br_soil_moist) == HIGH) {
+        if (digitalRead(br_soil_moist) == LOW) {
           Serial.println("Soil is dry ! Switching state to check_rain");
           state = check_rain;
         } 
@@ -73,7 +73,7 @@ void loop() {
 
 
     case check_rain:
-      if (digitalRead(br_press)==HIGH) { 
+      if (digitalRead(br_press)==LOW) { 
         Serial.println("no pressure drop detected ! switching state to begin_water");
         state = begin_water;
     } else{
