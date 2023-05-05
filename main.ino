@@ -96,7 +96,7 @@ void loop() {
       break;
 
     case low_water:
-      while (digitalRead(br_lvl_eau) == HIGH) {
+      while (digitalRead(br_lvl_eau) == LOW) {
         digitalWrite(br_led_wat_low, HIGH);
       }
       Serial.println("Water level is good");  
