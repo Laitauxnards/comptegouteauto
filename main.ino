@@ -51,7 +51,7 @@ void loop() {
       }
       if (analogRead(br_nuit)==LOW) {
         Serial.println("Night is true");
-        if map(analogRead(0), 500, 250, 0, 100)<set_moist { //vérifier que la terre est moins humide que défini par l'utilisateur
+        if (map(analogRead(0), 500, 250, 0, 100)<set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
           Serial.println("Soil is dry ! Switching state to check_rain");
           state = check_rain;
         } 
