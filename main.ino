@@ -1,5 +1,5 @@
 //============Configuration du senior el system============
-int set_moist = 2; //Réglage de l'humidité du sol requise par la plante remplacer les X par la valeur en % d'humidité (100% = terre très mouillée, 0% = terre sèche)
+int set_moist = 50; //Réglage de l'humidité du sol requise par la plante remplacer les X par la valeur en % d'humidité (100% = terre très mouillée, 0% = terre sèche)
 bool set_night = 1; //paramètre de prise en compte de la nuit, true si la nuit est prise en compte
 //=========================================================
 bool night=0; //il fait nuit ou pas?, true si il fait nuit 
@@ -43,15 +43,15 @@ void loop() {
   switch(state){
     case read_sensors:
       digitalWrite(br_start_water, LOW); //couper l'arrosage
-      night = analogRead(br_nuit); //a remplacer par un script photo résistance
-      if (analogRead(br_lvl_eau) == LOW) { //s'assurer que le niveau d'eau est correct 
+      night = digitalRead(br_nuit); //a remplacer par un script photo résistance
+      if (digitalRead(br_lvl_eau) == LOW) { //s'assurer que le niveau d'eau est correct 
         Serial.println("Low water ! Switching state to low_water");
         state = low_water;
         break;
       }
-      if (analogRead(br_nuit)==LOW) {
+      if (digitalRead(br_nuit)==LOW) {
         Serial.println("Night is true");
-        if (map(analogRead(0), 500, 250, 0, 100)<set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
+        if (map(analogRead(0), 520, 250, 0, 100)<set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
           Serial.println("Soil is dry ! Switching state to check_rain");
           state = check_rain;
         } 
@@ -61,9 +61,11 @@ void loop() {
         }
       Serial.println("Case read_sensors successfully executed using following settings: ");
       Serial.print("br_nuit: ");
-      Serial.println(analogRead(br_nuit));
+      Serial.println(digitalRead(br_nuit));
       Serial.print("br_lvl_eau: ");        
-      Serial.println(analogRead(br_lvl_eau));
+      Serial.println(digitalRead(br_lvl_eau));
+      Serial.print("br_soil_moist (%): ");        
+      Serial.println(map(analogRead(0), 520, 250, 0, 100));
       Serial.print("br_soil_moist: ");
       Serial.println(analogRead(br_soil_moist));
       Serial.println("_________");
