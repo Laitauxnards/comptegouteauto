@@ -4,7 +4,6 @@ void setup() {
 }
 
 void loop() {
-  int anaread = analogRead(0);
-  int percent = map(anaread, 500, 250, 0, 100);
-  Serial.print("percent : ");
+  int percent = map(analogRead(0), 500, 250, 0, 100);
+  Serial.print("Pourcentage d'humidité : ");
   Serial.println(percent);
