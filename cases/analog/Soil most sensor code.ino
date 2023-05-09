@@ -5,6 +5,6 @@ void setup() {
 
 void loop() {
   int anaread = analogRead(0);
-  Serial.print("anaread: ");
-  Serial.println(anaread);
-}
+  int percent = map(anaread, 500, 250, 0, 100);
+  Serial.print("percent : ");
+  Serial.println(percent);

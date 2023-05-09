@@ -1,5 +1,5 @@
 //============Configuration du senior el system============
-unsigned long set_moist = 2; //Réglage de l'humidité du sol requise par la plante remplacer les X par la valeur
+unsigned long set_moist = 2; //Réglage de l'humidité du sol requise par la plante remplacer les X par la valeur en % d'humidité
 bool set_night = 1; //paramètre de prise en compte de la nuit, true si la nuit est prise en compte
 //=========================================================
 bool night=0; //il fait nuit ou pas?, true si il fait nuit 
