@@ -61,7 +61,7 @@ void loop() {
         }
       Serial.println("Case read_sensors successfully executed using following settings: ");
       Serial.print("br_nuit: ");
-      Serial.println(anallogRead(br_nuit));
+      Serial.println(analogRead(br_nuit));
       Serial.print("br_lvl_eau: ");        
       Serial.println(analogRead(br_lvl_eau));
       Serial.print("br_soil_moist: ");
