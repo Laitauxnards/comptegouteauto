@@ -64,8 +64,9 @@ void loop() {
       Serial.println(digitalRead(br_nuit));
       Serial.print("br_lvl_eau: ");        
       Serial.println(digitalRead(br_lvl_eau));
-      Serial.print("br_soil_moist (%): ");        
-      Serial.println(map(analogRead(0), 520, 250, 0, 100));
+      Serial.print("br_soil_moist: ");
+      Serial.print(map(analogRead(0), 520, 250, 0, 100));
+      Serial.println("%");
       Serial.print("br_soil_moist: ");
       Serial.println(analogRead(br_soil_moist));
       Serial.println("_________");
