@@ -1,9 +1,10 @@
-void setup(){
+int jsp = A0;
+
+void setup() {
+ pinMode(jsp, INPUT);
  } 
 
-
 void loop() {
-   int state= analogRead(A0);
-    Serial.print("State: ");
-    Serial.println(state);
+    Serial.print("jsp: ");
+    Serial.println(analogRead(jsp));
 }
