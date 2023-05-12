@@ -1,4 +1,4 @@
-int jsp = A0;
+int pr = A0;
 
 void setup() {
  pinMode(pr, INPUT);
