@@ -7,7 +7,7 @@
         state = low_water;
         break;
       }
-      if (digitalRead(br_nuit)==LOW) {
+      if (analogRead(br_nuit)<380) {
         Serial.println("Night is true");
         if (map(analogRead(0), 520, 250, 0, 100)<set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
           Serial.println("Soil is dry ! Switching state to check_rain");
@@ -19,13 +19,13 @@
         }
       Serial.println("Case read_sensors successfully executed using following settings: ");
       Serial.print("br_nuit: ");
-      Serial.println(digitalRead(br_nuit));
+      Serial.println(analogRead(br_nuit));
       Serial.print("br_lvl_eau: ");        
       Serial.println(digitalRead(br_lvl_eau));
-      Serial.print("br_soil_moist (%): ");        
-      Serial.println(map(analogRead(0), 520, 250, 0, 100));
+      Serial.print("br_soil_moist: ");
+      Serial.print(map(analogRead(0), 520, 250, 0, 100));
+      Serial.println("%");
       Serial.print("br_soil_moist: ");
       Serial.println(analogRead(br_soil_moist));
       Serial.println("_________");
       delay(1000);
-      break;

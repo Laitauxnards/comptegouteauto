@@ -8,7 +8,7 @@ unsigned long press_save=0; //Sauvegarde de la pression pour la prise d'info ini
 bool wat_lvl_crit=0; //valeur booléenne, true si niveau de l'eau est faible
 unsigned long temps=0; //timer (max 49d)
 unsigned long temps_save=0; //Sauvegarde de l'état précédent du chrono pour faire un timer
-int br_nuit = 13; //broche détect. nuit
+int br_nuit = A2; //broche détect. nuit
 int br_lvl_eau = 12; //broche détect. lvl eau
 int br_soil_moist = A1; //broche détect. soil moist 
 int br_press = 10; //broche détect. de la press atmo
@@ -49,7 +49,7 @@ void loop() {
         state = low_water;
         break;
       }
-      if (digitalRead(br_nuit)==LOW) {
+      if (analogRead(br_nuit)<380) {
         Serial.println("Night is true");
         if (map(analogRead(0), 520, 250, 0, 100)<set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
           Serial.println("Soil is dry ! Switching state to check_rain");
@@ -61,7 +61,7 @@ void loop() {
         }
       Serial.println("Case read_sensors successfully executed using following settings: ");
       Serial.print("br_nuit: ");
-      Serial.println(digitalRead(br_nuit));
+      Serial.println(analogRead(br_nuit));
       Serial.print("br_lvl_eau: ");        
       Serial.println(digitalRead(br_lvl_eau));
       Serial.print("br_soil_moist: ");
