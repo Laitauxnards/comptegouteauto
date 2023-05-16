@@ -14,6 +14,7 @@ int br_soil_moist = A1; //broche détect. soil moist
 int br_press = 10; //broche détect. de la press atmo
 int br_start_water = 2; //broche électrovanne
 int br_led_wat_low = 4;
+int percent_wat = 0;
 enum {read_sensors, check_rain, begin_water, low_water}state;
 
 void setup(){
@@ -43,15 +44,15 @@ void loop() {
   switch(state){
     case read_sensors:
       digitalWrite(br_start_water, LOW); //couper l'arrosage
-      night = digitalRead(br_nuit); //a remplacer par un script photo résistance
+      percent_wat = (map(analogRead(A0), 520, 250, 0, 100));
       if (digitalRead(br_lvl_eau) == LOW) { //s'assurer que le niveau d'eau est correct 
         Serial.println("Low water ! Switching state to low_water");
         state = low_water;
         break;
       }
-      if (analogRead(br_nuit)<380) {
+      if (analogRead(br_nuit)<50) {
         Serial.println("Night is true");
-        if (map(analogRead(0), 520, 250, 0, 100)<set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
+        if (percent_wat<set_moist) { //vérifier que la terre est moins humide que défini par l'utilisateur
           Serial.println("Soil is dry ! Switching state to check_rain");
           state = check_rain;
         } 
@@ -65,7 +66,7 @@ void loop() {
       Serial.print("br_lvl_eau: ");        
       Serial.println(digitalRead(br_lvl_eau));
       Serial.print("br_soil_moist: ");
-      Serial.print(map(analogRead(0), 520, 250, 0, 100));
+      Serial.print(percent_wat);
       Serial.println("%");
       Serial.print("br_soil_moist: ");
       Serial.println(analogRead(br_soil_moist));
