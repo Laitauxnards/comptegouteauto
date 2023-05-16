@@ -1,7 +1,7 @@
 int pr = A0;
 
 void setup() {
- pinMode(lum, INPUT);
+ pinMode(pr, INPUT);
  Serial.begin(9600);
  } 
 
