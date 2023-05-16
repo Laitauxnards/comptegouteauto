@@ -21,7 +21,7 @@ void setup(){
   Serial.print("Initialized serial link... ");
 //=======Init pins=======
   pinMode(br_start_water, OUTPUT);
-  pinMode(br_nuit, INPUT_PULLUP);
+  pinMode(br_nuit, INPUT);
   pinMode(br_lvl_eau, INPUT_PULLUP);
   pinMode(br_soil_moist, INPUT);
   pinMode(br_press, INPUT_PULLUP);
