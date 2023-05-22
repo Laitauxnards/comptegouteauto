@@ -1,11 +1,8 @@
 //============Configuration du senior el system============
 int set_moist = 50; //Réglage de l'humidité du sol requise par la plante remplacer les X par la valeur en % d'humidité (100% = terre très mouillée, 0% = terre sèche)
-bool set_night = 1; //paramètre de prise en compte de la nuit, true si la nuit est prise en compte
 //=========================================================
-bool night=0; //il fait nuit ou pas?, true si il fait nuit 
 unsigned long press=0; //valeur de la pression atmo
 unsigned long press_save=0; //Sauvegarde de la pression pour la prise d'info initiale (avant les 3h)
-bool wat_lvl_crit=0; //valeur booléenne, true si niveau de l'eau est faible
 unsigned long temps=0; //timer (max 49d)
 unsigned long temps_save=0; //Sauvegarde de l'état précédent du chrono pour faire un timer
 int br_nuit = A2; //broche détect. nuit
