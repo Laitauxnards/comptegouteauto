@@ -30,8 +30,6 @@ void setup(){
 //=======Init var=======
   temps = millis();
   temps_save = 0;
-  night = 0;
-  wat_lvl_crit = 0;
   press_save = digitalRead(br_press);
   state=read_sensors;
   Serial.print("Initialized variables... ");
